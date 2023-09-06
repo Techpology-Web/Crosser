@@ -126,3 +126,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ARGON_HASH_ROUNDS      = 4
+ARGON_HASH_SALT        = "Kr0SgwJEJ3r8OWFt"
+ARGON_HASH_PARALLELISM = 1 

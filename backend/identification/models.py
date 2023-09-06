@@ -10,8 +10,8 @@ class User(models.Model):
 
     hashes = models.ManyToManyField(to=Hash) # hashes to verify files
 
-    decompressed_size = models.IntegerField() # real size
-    compressed_size = models.IntegerField()   # compressed size
+    decompressed_size = models.PositiveIntegerField(default=0) # real size
+    compressed_size = models.PositiveIntegerField(default=0)   # compressed size
 
 
 class Session(models.Model):

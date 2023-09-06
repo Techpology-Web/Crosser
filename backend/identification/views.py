@@ -1,13 +1,47 @@
 from django.shortcuts import render
-from requestHandler import extractRequest
+from requestHandler import *
 from django.http import HttpResponse
 import json
+from identification.models import User
 
-# Create your views here.
+def log_in(request):
+    if request.method == "POST":
+        req = extractRequest(request)
+        username = req["username"]
+        password = argon(req["password"])
+        users = User.objects.filter(username=username, password=password)
+        if len(users) == 0:
+            return JsonResponse({"code":"Wrong credentials","password":password},status=401)
+        
+        session = Session(user=users[0],key=argon(password))
+        session.save()
 
+        return JsonResponse({"sessionKey":session.key})
+
+def get_user_info(request):
+    if request.method == "POST":
+        req = extractRequest(request)
+        user = req["session"]
+    return JsonResponse({"username":user.username, "compressed_size":user.compressed_size, "decompressed_size":user.decompressed_size})
 
 def create_user(request):
     if request.method == "POST":
         req = extractRequest(request)
+        try:
+            username = req["username"]
+            password = argon(req["password"])
 
-    return HttpResponse(json.dumps({"test":"idk"}))
+            users = User.objects.filter(username=username)
+            if len(users) > 0:
+                return JsonResponse({"code":"User allredy exists"},status=400)
+
+            new_user = User(
+                username=username, 
+                password=password,
+            )
+            new_user.save()
+            return JsonResponse({"code":"User created"},status=201)
+        except Exception as e:
+            return JsonResponse({"error":"Something went wrong","value":str(e)},status=400)
+        
+    return JsonResponse({"code":"Wrong method"},status=404)
