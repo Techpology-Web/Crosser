@@ -11,7 +11,7 @@ def log_in(request):
         password = argon(req["password"])
         users = User.objects.filter(username=username, password=password)
         if len(users) == 0:
-            return JsonResponse({"code":"Wrong credentials","password":password},status=401)
+            return JsonResponse({"code":"Wrong credentials"},status=401)
         
         session = Session(user=users[0],key=argon(password))
         session.save()
