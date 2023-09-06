@@ -1,0 +1,38 @@
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+django/nginx/ssl/example.crt
+django/nginx/ssl/example.key
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+
+# Django #
+*.log
+*.pot
+*.pyc
+pycache
+db.sqlite3
+backend/db.sqlite3
+backend/db.sqlite3
+.fleet
+.idea
+backend/backend/vars.py
+backend/e_smtp/.DS_Store
+backend/identification/.DS_Store
+backend/productsHandler/.DS_Store
+backend/security/.DS_Store
+backend/.DS_Store
+.DS_Store
