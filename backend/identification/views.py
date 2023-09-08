@@ -24,6 +24,16 @@ def get_user_info(request):
         user = req["session"]
     return JsonResponse({"username":user.username, "compressed_size":user.compressed_size, "decompressed_size":user.decompressed_size})
 
+def get_users(request):
+    if request.method == "GET":
+        req = extractRequest(request)
+        users = []
+        for user in User.objects.all():
+            users.append({"username":user.username, "pk":user.pk})
+        print(users)
+        return JsonResponse(users)
+    return ErrorResponse("wrong method")
+
 def create_user(request):
     if request.method == "POST":
         req = extractRequest(request)
