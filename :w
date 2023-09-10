@@ -1,0 +1,31 @@
+import React from "react"
+import AdminContainer from "../AdminContainer.js"
+import FileInput from "../Components/FileInput.js"
+import axios from "../axiost.js"
+
+
+
+export default function Home(props){
+
+
+  const upload = (e) => {
+    var formData = new FormData();
+    formData.append("image", e);
+    axios.post("/files/compress",formData)
+      .then(r=>{
+
+      })
+      .catch(error=>{
+
+      })
+  }
+
+  return (
+    <AdminContainer>
+      <div className="w-full h-full flex items-center justify-center" >
+        <div className="w-1/3 h-1/3" >
+          <FileInput onDrop={upload} />
+        </div>
+      </div>
+    </AdminContainer>);
+}
