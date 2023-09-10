@@ -3,6 +3,7 @@ from requestHandler import *
 from django.http import HttpResponse
 import json
 from identification.models import User
+import time
 
 def log_in(request):
     if request.method == "POST":
@@ -13,7 +14,7 @@ def log_in(request):
         if len(users) == 0:
             return JsonResponse({"code":"Wrong credentials"},status=401)
         
-        session = Session(user=users[0],key=argon(password))
+        session = Session(user=users[0],key=argon(password+str(time.time())))
         session.save()
 
         return JsonResponse({"sessionKey":session.key})
