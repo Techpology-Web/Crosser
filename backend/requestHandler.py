@@ -18,6 +18,7 @@ def extractRequest(req):
             except:pass
         return body
     return req
+
 def extractSession(req) -> User:
     if "sessionKey" in req.headers:
         sessionKey = req.headers.get("sessionKey")

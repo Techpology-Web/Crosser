@@ -7,11 +7,25 @@ import base64
 
 
 
+def decompress(request):
+    if request.method == "POST":
+        user = extractSession(request)
+        if user == None: return ErrorResponse("no session")
+
+        file = request.FILES["file"]
+
+        if user.can_unlock(Hash.get_hash_from_file(file)):
+            #decompress 
+            return JsonResponse({"code":"sucessfully uploaded file"})
+        else: return ErrorResponse("cant unlock file")
+    else:
+        return ErrorResponse("wrong method")
+
 def compress(request):
     if request.method == "POST":
         print(request.FILES)
         file = request.FILES["file"]
-        
+         
         f = TempCrossFile(file=file)
         f.save()
         return JsonResponse({"code":"sucessfully uploaded file"})
@@ -20,7 +34,11 @@ def compress(request):
 
 def share(request):
     if request.method == "POST":
+
         user = extractSession(request)
+        
+        if user == None: return ErrorResponse("No session")
+
         to = User.objects.filter(pk=request.POST["to"])
         method = request.POST["method"]
 
@@ -57,7 +75,30 @@ def share_with_password(request):
         get the hash check if user can unlock
         set the hash password to password 
     """
-    pass
+    if request.method == "POST":
+
+        user = extractSession(request)
+        password = request.POST["password"]
+        
+        if user == None: return ErrorResponse("No session")
+
+        # if the to user exist we check if the user can unlcock the file
+        # if so we share the hash depening of the method provided
+         
+        file = request.FILES["file"]
+        
+        hash = argon(base64.b64decode(file.read()))
+        hash_obj = Hash.getHash(hash)
+
+        if user.can_unlock(hash_obj):
+            hash_obj.password = argon(password)
+            hash_obj.save()
+            return JsonResponse({"code":f"sucessfully set password"})
+        else:
+            return ErrorResponse("can't unlock file")
+
+    else:
+        return ErrorResponse("wrong method")
 
 """
 Share forever meands thath the user sends trhe file hash to 
