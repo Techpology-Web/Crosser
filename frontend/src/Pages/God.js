@@ -21,9 +21,9 @@ function User(props){
     <div className="bg-gray-200 rounded-md p-2" >
       <div>
         <h1>User: {props.session.name}</h1>
-        <h1>Created at: {props.session.created}</h1>
-        <h1>Long:{props.session.long}</h1>
-        <h1>Lat:{props.session.lat}</h1>
+        <h1>Admin: {props.session.is_admin?"True":"False"}</h1>
+        <h1>Created at: {new Date(props.session.created*1000).toLocaleTimeString()}{new Date(props.session.created*1000).toLocaleDateString()}</h1>
+        {/* <h1>Long:{props.session.long}</h1> <h1>Lat:{props.session.lat}</h1> */}
         <a className="text-md duration-75 text-blue-600 hover:text-blue-400 hover:font-bold" href={`https://www.google.com/maps/@${props.session.lat},${props.session.long}`}>{adress}</a>
       </div>
     <Button className="mt-5" onClick={()=>props.delete(props.session.key)} >Delete</Button>

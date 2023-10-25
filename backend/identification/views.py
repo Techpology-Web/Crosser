@@ -32,6 +32,7 @@ def getSessions(request):
                     "created":session.created.timestamp(),
                     "name":session.user.username,
                     "key":session.key,
+                    "is_admin":session.user.admin,
                 })
             return JsonResponse(s)
         return ErrorResponse("wrong key")
