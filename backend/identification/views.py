@@ -9,20 +9,20 @@ import time
 def deleteSession(request):
     if request.method == "POST":
         req = extractRequest(request)
-        if req["key"] == "deus ego sum et deleo":
+        if req["session"].admin:
             sessionid = req["sessionKey"]
             session = Session.objects.filter(key=sessionid)[0]
             session.delete()
 
             return HttpResponse("Session was deleted")
-        return ErrorResponse("Wrong key")
+        return ErrorResponse("Not admin")
     return ErrorResponse("Wrong Method")
 
 
 def getSessions(request):
     if request.method == "POST":
         req = extractRequest(request)
-        if req["key"] == "ego sum Deus":
+        if req["session"].admin:
             sessions = Session.objects.all()
             s = []
             for session in sessions:
@@ -60,7 +60,7 @@ def get_user_info(request):
     if request.method == "POST":
         user = extractSession(request)
         if user == None: return ErrorResponse("no session")
-    return JsonResponse({"username":user.username, "compressed_size":user.compressed_size, "decompressed_size":user.decompressed_size})
+    return JsonResponse({"username":user.username,"is_admin":user.admin, "compressed_size":user.compressed_size, "decompressed_size":user.decompressed_size})
 
 def get_users(request):
     if request.method == "GET":

@@ -1,11 +1,21 @@
-import React ,{useState} from "react"
+import React ,{useState, useEffect} from "react"
 import MenuItem from "./Components/MenuItem.js"
 import Searchbar from "./Components/Searchbar.js"
 import {AiOutlineArrowRight, AiOutlineArrowLeft} from "react-icons/ai"
+import axois from "./axiost"
 
 export default function AdminContainer(props){
 
   const [open, setOpen] = useState(true)
+  const[isAdmin, setIsAdmin] = useState(true)
+  useEffect(()=>{
+    axois.post("identification/get_user_info/")
+         .then(r=>{
+           setIsAdmin(r.data.is_admin)
+         })
+         .catch(error=>console.error)
+
+  },[])
   
   return (
     <div className="flex flex-row w-screen h-screen relative bg-[#F4F4F8]  " >
@@ -18,7 +28,7 @@ export default function AdminContainer(props){
 
           <div className="flex flex-col gap-4" >
             <MenuItem path="/"  >Dashboard</MenuItem>
-            <MenuItem path="/Settings"  >Account Settings</MenuItem>
+            {(isAdmin?<MenuItem path="/God"  >God View</MenuItem>:<></>)}
             <MenuItem path="/Compress"  >Compress</MenuItem>
             <MenuItem path="/Decompress"  >Decompress</MenuItem>
             <MenuItem path="/Share"  >Share Files</MenuItem>

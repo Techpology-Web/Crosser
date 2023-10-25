@@ -24,11 +24,9 @@ function User(props){
         <h1>Created at: {props.session.created}</h1>
         <h1>Long:{props.session.long}</h1>
         <h1>Lat:{props.session.lat}</h1>
-        <h1>Adress: {adress}</h1>
+        <a className="text-md duration-75 text-blue-600 hover:text-blue-400 hover:font-bold" href={`https://www.google.com/maps/@${props.session.lat},${props.session.long}`}>{adress}</a>
       </div>
-      <div>
-        <Button onClick={()=>props.delete(props.session.key)} >Delete</Button>
-      </div>
+    <Button className="mt-5" onClick={()=>props.delete(props.session.key)} >Delete</Button>
     </div>
   )
 }
@@ -47,10 +45,8 @@ export default function God(props){
            console.log(error)
          })
   },[refresh])
-
   const deleteSession = (sessionKey) => {
     axois.post("identification/delete_session/",{
-      key:"deus ego sum et deleo",
       sessionKey:sessionKey,
     })
          .then(r=>{
@@ -65,6 +61,7 @@ export default function God(props){
 
   return (
     <div className="flex flex-col gap-2 p-12" >
+      <h1 className="text-3xl" >All alive sessions</h1>
         {sessions.map((session,i)=>
           <User session={session} delete={deleteSession} />
         )}

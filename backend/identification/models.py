@@ -8,6 +8,8 @@ class User(models.Model):
     username = models.TextField()
     password = models.TextField()
 
+    admin = models.BooleanField(default=False)
+
     hashes         = models.ManyToManyField(to=Hash, related_name="hashes", blank=True) # hashes to verify files
     onetime_hashes = models.ManyToManyField(to=Hash, related_name="onetime_hashes",blank=True) # hashes to verify files can only be used once
 
