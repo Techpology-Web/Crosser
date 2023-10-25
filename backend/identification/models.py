@@ -49,9 +49,8 @@ class Session(models.Model):
         print(between)
 
 
-        if between > (24*60*60):
-            pass
-            #self.delete()
+        if between > (10*60*60):
+            self.delete()
 
     def save(self, *args, **kwargs):
 
