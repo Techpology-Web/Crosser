@@ -3,9 +3,24 @@ from django.http import HttpResponse
 import json
 from passlib.hash import argon2
 from identification.models import User
+import hashlib
 
 from identification.models import Session
-    
+
+def hach(file_path):
+    with open(file_path, 'rb') as file:
+        # Create a hash object (in this case, SHA-256)
+        sha256_hash = hashlib.sha256()
+
+        # Read the file in chunks to conserve memory
+        chunk = 0
+        while chunk := file.read(8192):
+            sha256_hash.update(chunk)
+
+        # Get the hexadecimal representation of the hash
+        return sha256_hash.hexdigest()
+
+
 def extractRequest(req):
     if(req.method == "POST"):
         body = json.loads(req.body.decode('utf-8'))
@@ -14,6 +29,8 @@ def extractRequest(req):
             sessionKey = req.headers.get("sessionKey")
             try:
                 sessionValue = Session.objects.filter(key=sessionKey)[0]
+                sessionValue.checkSession()
+
                 body["session"] = sessionValue.user
             except:pass
         return body
@@ -24,6 +41,9 @@ def extractSession(req) -> User:
         sessionKey = req.headers.get("sessionKey")
         try:
             sessionValue = Session.objects.filter(key=sessionKey)[0]
+
+            sessionValue.checkSession()
+
             return sessionValue.user
         except:pass
     return None 

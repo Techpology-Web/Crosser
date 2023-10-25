@@ -14,6 +14,7 @@ class User(models.Model):
     decompressed_size = models.PositiveIntegerField(default=0) # real size
     compressed_size = models.PositiveIntegerField(default=0)   # compressed size
 
+
     def can_unlock(self, hash_obj:Hash):
         """
             returns true if user has the hash
@@ -26,12 +27,34 @@ class User(models.Model):
             self.onetime_hashes.remove(hash_obj)
             return True
         return False
-    
-    
-    
-
-
 
 class Session(models.Model):
+
+    created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(to=User,on_delete=models.CASCADE)
     key = models.TextField()
+
+    long = models.FloatField(default=0)
+    lat = models.FloatField(default=0)
+
+    def checkSession(self):
+        #checking if the session is older then 24 hours
+        import datetime
+        created = self.created.timestamp()
+        now = datetime.datetime.now().timestamp()
+
+        between = now-created
+        print(between)
+
+
+        if between > (24*60*60):
+            pass
+            #self.delete()
+
+    def save(self, *args, **kwargs):
+
+        #for session in Session.objects.all():
+        #    if session != self and session.user == self.user:
+        #        session.delete()
+
+        super(Session, self).save(*args, **kwargs)

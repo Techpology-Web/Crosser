@@ -3,6 +3,8 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+./backend/.venv
+
 django/nginx/ssl/example.crt
 django/nginx/ssl/example.key
 
@@ -36,3 +38,4 @@ backend/productsHandler/.DS_Store
 backend/security/.DS_Store
 backend/.DS_Store
 .DS_Store
+backend/.venv

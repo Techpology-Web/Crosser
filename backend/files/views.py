@@ -3,7 +3,26 @@ from files.models import TempCrossFile, Hash
 from requestHandler import *
 from identification.models import User
 import base64
+import os
+import time
+import threading
+
 # Create your views here.
+def get_files(request):
+
+    if request.method == "POST":
+        req = extractRequest(request)
+        user = req["session"]
+        if user == None: return ErrorResponse("no session")
+
+        hashes = []
+
+        for hash in user.hashes.all():
+            hashd = hash.__dict__
+            del hashd["password"]
+            del hashd["_state"]
+            hashes.append(hashd)
+        return JsonResponse({"hashes":hashes})
 
 
 
@@ -11,24 +30,98 @@ def decompress(request):
     if request.method == "POST":
         user = extractSession(request)
         if user == None: return ErrorResponse("no session")
+        password = request.POST["password"]
 
+        if password == None: return ErrorResponse("no password was sent")
         file = request.FILES["file"]
+        hash = Hash.get_hash_from_file(file.name)
+        if hash == None: return ErrorResponse("file not found")
 
-        if user.can_unlock(Hash.get_hash_from_file(file)):
-            #decompress 
+        if user.can_unlock(hash):
+
+            filename = file.name
+
+            threading.Thread(target=lambda a: mv_file("output", filename,".png"), args=(["world"])).start()
+
+            return JsonResponse({"code":"sucessfully uploaded file", "file":get_output_file("decompressed",filename, False)})
+        elif hash.password == argon(password):
             return JsonResponse({"code":"sucessfully uploaded file"})
-        else: return ErrorResponse("cant unlock file")
+
+        else: return ErrorResponse("can't unlock file")
     else:
         return ErrorResponse("wrong method")
 
+"""
+    we want to save the file
+    then call the cross program to
+    compress it. retrive the file
+    and return it
+"""
+
+def get_output_file(folder, filename, extention=True):
+    import glob
+
+    # dont look with extention
+    if extention == False:
+        base = os.path.splitext(filename)[0]
+        filename = base
+
+
+    while not glob.glob(f"./{folder}/{filename}.*"):
+        print(f"./{folder}/{filename} does not exist")
+        time.sleep(2)
+
+    url = "http://localhost:8000/"
+    return glob.glob(f"./{folder}/{filename}.*")[0]
+
+def mv_file(outputfolder, filename, extention=".gg"):
+    time.sleep(1)
+    #os.system(f"mkdir ./{outputfolder}/")
+    os.system(f"mv ./media/{filename} ./{outputfolder}/{os.path.splitext(filename)[0]}{extention}")
+
 def compress(request):
     if request.method == "POST":
-        print(request.FILES)
+        user = extractSession(request)
+
+        if user == None: return ErrorResponse("no session")
+
         file = request.FILES["file"]
-         
         f = TempCrossFile(file=file)
         f.save()
-        return JsonResponse({"code":"sucessfully uploaded file"})
+        #generate hash
+        hash = Hash(
+            value=hach("./media/"+file.name),
+            filename=file.name,
+            decompressed_size = file.size / 1000,      # to kb
+            compressed_size   = file.size / 1000 / 10, # to kb but simulate smaller file hehe
+        )
+        hash.save()
+        user.hashes.add(hash)
+
+        print(file.read())
+
+        # saves the size of uploaded file
+        user.decompressed_size += ( ( file.size ) / 1000      ) # kbites
+        user.compressed_size   += ( ( file.size ) / 1000 / 10 ) # kbites
+        user.save()
+
+        url = "http://localhost:8000/"
+        outputfolder = "output"
+
+       # token = file.name.split("_")[0]
+
+        filename = file.name
+        print(filename)
+
+        threading.Thread(target=lambda a: mv_file(outputfolder, filename), args=(["world"])).start()
+
+        file_path = get_output_file(outputfolder, filename, False)
+
+        hash.compressed_value = hach(file_path)
+        hash.save()
+        # save compressed hash value aswell
+
+        return JsonResponse({"code":"sucessfully uploaded file","compressed_file":file_path})
     else:
         return ErrorResponse("wrong method")
 

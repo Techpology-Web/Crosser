@@ -6,5 +6,6 @@ urlpatterns = [
     path('decompress', views.decompress, name='decompress'),
     path('share', views.share, name='share'),
     path('share_with_password', views.share_with_password, name='share_with_password'),
+    path('get_files', views.get_files, name='share_with_password'),
     # Add more URL patterns as needed
 ]
