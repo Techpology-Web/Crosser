@@ -24,4 +24,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('identification/', include('identification.urls')),
     path('files/', include('files.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ static(settings.OUTPUT_URL, document_root=settings.OUTPUT_ROOT)+ static(settings.DECOMPRESSED_URL, document_root=settings.DECOMPRESSED_ROOT)

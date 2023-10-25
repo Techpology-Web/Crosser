@@ -9,6 +9,9 @@ export default function AdminContainer(props){
   const [open, setOpen] = useState(true)
   const[isAdmin, setIsAdmin] = useState(true)
   useEffect(()=>{
+    if(window.screen.width < 768){
+      setOpen(false)
+    }
     axois.post("identification/get_user_info/")
          .then(r=>{
            setIsAdmin(r.data.is_admin)
@@ -16,7 +19,8 @@ export default function AdminContainer(props){
          .catch(error=>console.error)
 
   },[])
-  
+
+
   return (
     <div className="flex flex-row w-screen h-screen relative bg-[#F4F4F8]  " >
       <div className={`p-4 h-full w-[320px] duration-100 fixed md:relative z-10 ${ open ? "" : "scale-0 -mr-[320px]"}`}  >
@@ -28,7 +32,7 @@ export default function AdminContainer(props){
 
           <div className="flex flex-col gap-4" >
             <MenuItem path="/"  >Dashboard</MenuItem>
-            {(isAdmin?<MenuItem path="/God"  >God View</MenuItem>:<></>)}
+ {(isAdmin? <MenuItem path="/God"  >God View</MenuItem>:<></>)}
             <MenuItem path="/Compress"  >Compress</MenuItem>
             <MenuItem path="/Decompress"  >Decompress</MenuItem>
             <MenuItem path="/Share"  >Share Files</MenuItem>

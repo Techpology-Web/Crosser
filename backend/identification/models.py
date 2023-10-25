@@ -55,8 +55,7 @@ class Session(models.Model):
 
     def save(self, *args, **kwargs):
 
-        #for session in Session.objects.all():
-        #    if session != self and session.user == self.user:
-        #        session.delete()
+        for session in Session.objects.all():
+            session.checkSession()
 
         super(Session, self).save(*args, **kwargs)

@@ -34,6 +34,8 @@ def decompress(request):
 
         if password == None: return ErrorResponse("no password was sent")
         file = request.FILES["file"]
+        f = TempCrossFile(file=file)
+        f.save()
         hash = Hash.get_hash_from_file(file.name)
         if hash == None: return ErrorResponse("file not found")
 
@@ -41,11 +43,15 @@ def decompress(request):
 
             filename = file.name
 
-            threading.Thread(target=lambda a: mv_file("output", filename,".png"), args=(["world"])).start()
+            threading.Thread(target=lambda a: mv_file("decompressed", filename,".py"), args=(["world"])).start()
 
-            return JsonResponse({"code":"sucessfully uploaded file", "file":get_output_file("decompressed",filename, False)})
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file("decompressed",filename, False))})
         elif hash.password == argon(password):
-            return JsonResponse({"code":"sucessfully uploaded file"})
+            filename = file.name
+
+            threading.Thread(target=lambda a: mv_file("decompressed", filename,".py"), args=(["world"])).start()
+
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file("decompressed",filename, False))})
 
         else: return ErrorResponse("can't unlock file")
     else:
@@ -73,6 +79,10 @@ def get_output_file(folder, filename, extention=True):
 
     url = "http://localhost:8000/"
     return glob.glob(f"./{folder}/{filename}.*")[0]
+
+def getUrl(path):
+    url = "http://localhost:8000"
+    return url+(path[1:])
 
 def mv_file(outputfolder, filename, extention=".gg"):
     time.sleep(1)
@@ -121,7 +131,7 @@ def compress(request):
         hash.save()
         # save compressed hash value aswell
 
-        return JsonResponse({"code":"sucessfully uploaded file","compressed_file":file_path})
+        return JsonResponse({"code":"sucessfully uploaded file","compressed_file":getUrl(file_path)})
     else:
         return ErrorResponse("wrong method")
 
@@ -140,9 +150,12 @@ def share(request):
          
         if len(to) > 0:
             file = request.FILES["file"]
+
+            f = TempCrossFile(file=file)
+            f.save()
             
-            hash = argon(base64.b64decode(file.read()))
-            hash_obj = Hash.getHash(hash)
+            hash_obj = Hash.get_hash_from_file(file.name)
+            if hash_obj == None: return ErrorResponse("file not found")
 
             if user.can_unlock(hash_obj):
                 if method == "0" : #share once
@@ -179,9 +192,11 @@ def share_with_password(request):
         # if so we share the hash depening of the method provided
          
         file = request.FILES["file"]
+        f = TempCrossFile(file=file)
+        f.save()
         
-        hash = argon(base64.b64decode(file.read()))
-        hash_obj = Hash.getHash(hash)
+        hash_obj = Hash.get_hash_from_file(file.name)
+        if hash_obj == None: return ErrorResponse("file not found")
 
         if user.can_unlock(hash_obj):
             hash_obj.password = argon(password)

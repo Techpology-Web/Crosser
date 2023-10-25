@@ -24,7 +24,7 @@ export default function Compress(props){
     })
       .then(r=>{
         // download the compressed file
-        // changeUrl(r.data.compressed_file)
+        window.open(r.data.compressed_file)
         setLoading(false)
       })
       .catch(error=>{
