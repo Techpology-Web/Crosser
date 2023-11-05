@@ -27,7 +27,7 @@ export default function Signup(props){
   }
 
   useEffect(()=>{
-    //setLocation()
+
   })
 
   const navigate = useNavigate();

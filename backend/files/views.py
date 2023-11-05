@@ -85,7 +85,7 @@ def getUrl(path):
     return url+(path[1:])
 
 def mv_file(outputfolder, filename, extention=".gg"):
-    time.sleep(1)
+    #time.sleep(1)
     #os.system(f"mkdir ./{outputfolder}/")
     os.system(f"mv ./media/{filename} ./{outputfolder}/{os.path.splitext(filename)[0]}{extention}")
 
