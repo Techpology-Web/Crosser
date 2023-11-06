@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.files.storage import default_storage
+from backend.settings import V8ROOT
 
-media = "../V8_2/COMP"
+media = f"../{V8ROOT}/COMP"
 
 class TempCrossFile(models.Model):
     file = models.ImageField(default=None, null=True)

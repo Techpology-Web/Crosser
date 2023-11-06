@@ -6,13 +6,14 @@ import base64
 import os
 import time
 import threading
+from backend.settings import V8ROOT
 
 
-compressed_output = "../V8_2/CF"
-decompressed_output = "../V8_2/DF"
-media = "../V8_2/COMP"
 compressed_size = "./compressed_size.txt"
-db_folder = "../V8_2/DB/CDF"
+compressed_output =   f"../{V8ROOT}/CF"
+decompressed_output = f"../{V8ROOT}/DF"
+media =               f"../{V8ROOT}/COMP"
+db_folder =           f"../{V8ROOT}/DB/CDF"
 
 def get_size(start_path = '.'):
     total_size = 0
@@ -27,13 +28,13 @@ def get_size(start_path = '.'):
 def getCompSize():
     comp_size = 0
     with open(compressed_size,"r") as f:
-        comp_size = f.read()
+        comp_size = f.readline()
     return int(comp_size)
 
 def addSize(size):
-    size_as = comp_size
+    size_as = getCompSize()
     with open(compressed_size,"w") as f:
-        f.write(size_as+size)
+        f.write(str(size_as+size))
 
 def getDbSize(request):
     if request.method == "POST":
@@ -44,7 +45,7 @@ def getDbSize(request):
             "decompressed_size":get_size()/2
         }
 
-        return HttpResponse(bod)
+        return HttpResponse(json.dumps(bod))
     return HttpResponse("Hej")
 
 # Create your views here.
@@ -84,12 +85,15 @@ def decompress(request):
             b = ""
             a = get_output_file(decompressed_output,filename, False)
 
-            with open(a, "r") as f:
-                b = f.read()
-            b = bytes.fromhex(b)
+            try:
+                with open(a, "r") as f:
+                    b = f.read()
+                b = bytes.fromhex(b)
 
-            with open(a,"wb") as f:
-                f.write(b)
+                with open(a,"wb") as f:
+                    f.write(b)
+            except:
+                pass
 
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(a)})
         elif hash.password == argon(password):

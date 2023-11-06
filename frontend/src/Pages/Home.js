@@ -31,6 +31,12 @@ export default function Home(props){
 
   const [fileSize, setFileSize] = useState(1);
   const [username, setUsername] = useState("")
+  const [isAdmin, setIsAdmin]   = useState(true)
+
+  const [dbSize, setDbSize] = useState({
+    "compressed_size":0,
+    "decompressed_size":0,
+})
 
   const size = Math.pow(10,fileSize*3)
   const label = () => {switch (fileSize){
@@ -49,6 +55,26 @@ export default function Home(props){
     axios.post("/identification/get_user_info/")
     .then(r=>{
       setUsername(r.data.username)
+      setIsAdmin(r.data.is_admin)
+      if(r.data.is_admin){
+
+        axios.post("/files/get_db_size",{})
+          .then(r=>{
+              setDbSize([
+                {
+                  name:"Datebase without compressing",
+                  size: r.data.decompressed_size
+                },
+                {
+                  name:"Datebase with compressing",
+                  size: r.data.compressed_size
+                }
+              ])
+          })
+          .catch(error=>{
+
+          })
+      }
       setBarData([
         {
           name: 'Database without compressing',
@@ -91,9 +117,9 @@ export default function Home(props){
             <Berit onChange={()=>setFileSize(0)} value={fileSize == 0} >B</Berit>
           </div>
           <div className="flex flex-col w-full items-center justify-center ">
-            <h1>Your database</h1>
+            <h1>{isAdmin?"The whole database":"Your database"}</h1>
             <ResponsiveContainer >
-                <BarChart data={barData}>
+              <BarChart data={isAdmin?dbSize:barData}>
                     <Bar dataKey="size" fill="#FB5555" />
                     <XAxis dataKey="name" />
                     <YAxis />
