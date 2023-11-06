@@ -52,6 +52,7 @@ def decompress(request):
             b = ""
             a = get_output_file(decompressed_output,filename, False)
             print(a)
+            print(filename)
             with open(a, "r") as f:
                 b = f.read()
             b = bytes.fromhex(b)
