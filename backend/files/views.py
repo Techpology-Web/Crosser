@@ -116,7 +116,7 @@ def compress(request):
             value=hach(f"{media}/"+file.name),
             filename=file.name,
             decompressed_size = file.size / 1000,      # to kb
-            compressed_size   = -1
+            compressed_size   = 0
         )
         hash.save()
         user.hashes.add(hash)
