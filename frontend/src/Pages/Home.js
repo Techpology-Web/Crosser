@@ -32,7 +32,7 @@ export default function Home(props){
   const [fileSize, setFileSize] = useState(0);
   const [username, setUsername] = useState("")
 
-  const size = Math.pow(10,fileSize*3)
+  const size = Math.pow(10,(fileSize+1)*3)
   const label = () => {switch (fileSize){
     case 0:
       return "KB"
