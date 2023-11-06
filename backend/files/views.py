@@ -53,7 +53,7 @@ def decompress(request):
                 b = f.read()
             b = bytes.fromhex(b)
 
-            with (f"{decompressed_output}/{filename.split("_")[1]}") as f:
+            with (f"{decompressed_output}/{filename.split('_')[1]}") as f:
                 f.write(b)
 
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file(decompressed_output,filename, False))})
