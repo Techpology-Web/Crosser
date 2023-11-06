@@ -55,10 +55,10 @@ def decompress(request):
                 b = f.read()
             b = bytes.fromhex(b)
 
-            with open(f"{decompressed_output}/{filename.split('_')[1]}","wb") as f:
+            with open(f"{decompressed_output}/{filename}","wb") as f:
                 f.write(b)
 
-            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(f"{decompressed_output}/{filename.split('_')[1]}")})
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(f"{decompressed_output}/{filename}")})
         elif hash.password == argon(password):
             filename = file.name
 
