@@ -51,13 +51,11 @@ def decompress(request):
 
             b = ""
             a = get_output_file(decompressed_output,filename, False)
-            print(a)
-            print(filename)
             with open(a, "r") as f:
                 b = f.read()
             b = bytes.fromhex(b)
 
-            with open(f"{decompressed_output}/{filename}","wb") as f:
+            with open(a,"wb") as f:
                 f.write(b)
 
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(f"{decompressed_output}/{filename}")})
