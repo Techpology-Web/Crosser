@@ -125,8 +125,6 @@ def compress(request):
 
         # saves the size of uploaded file
         user.decompressed_size += ( ( file.size )  ) # kbites
-        #user.compressed_size   += ( ( file.size ) / 1000  ) # kbites
-        user.save()
 
         url = "http://localhost:8000/"
 
@@ -142,6 +140,7 @@ def compress(request):
         hash.compressed_size = file_stats.st_size;
         hash.save()
         user.compressed_size += file_stats.st_size;
+        user.save()
 
         hash.compressed_value = hach(file_path)
         hash.save()
