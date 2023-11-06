@@ -11,7 +11,41 @@ import threading
 compressed_output = "../V8_2/CF"
 decompressed_output = "../V8_2/DF"
 media = "../V8_2/COMP"
+compressed_size = "./compressed_size.txt"
+db_folder = "../V8_2/DB/CDF"
 
+def get_size(start_path = '.'):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # skip if it is symbolic link
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+
+    return total_size
+def getCompSize():
+    comp_size = 0
+    with open(compressed_size,"r") as f:
+        comp_size = f.read()
+    return int(comp_size)
+
+def addSize(size):
+    size_as = comp_size
+    with open(compressed_size,"w") as f:
+        f.write(size_as+size)
+
+def getDbSize(request):
+    if request.method == "POST":
+        comp_size = getCompSize()
+
+        bod = {
+            "compressed_size":comp_size,
+            "decompressed_size":get_size()/2
+        }
+
+        return HttpResponse(bod)
+    return HttpResponse("Hej")
 
 # Create your views here.
 def get_files(request):
@@ -141,6 +175,7 @@ def compress(request):
         hash.save()
         user.compressed_size += file_stats.st_size;
         user.save()
+        addSize(file_stats.st_size)
 
         hash.compressed_value = hach(file_path)
         hash.save()

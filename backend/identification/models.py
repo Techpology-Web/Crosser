@@ -1,5 +1,4 @@
 from django.db import models
-from argon2 import PasswordHasher
 from files.models import Hash
 
 # Create your models here.
