@@ -7,14 +7,18 @@ import os
 import time
 import threading
 
+
+compressed_output = "../V8_2/CF"
+decompressed_output = "../V8_2/DF"
+media = "../V8_2/COMP"
+
+
 # Create your views here.
 def get_files(request):
-
     if request.method == "POST":
         req = extractRequest(request)
         user = req["session"]
         if user == None: return ErrorResponse("no session")
-
         hashes = []
 
         for hash in user.hashes.all():
@@ -43,17 +47,18 @@ def decompress(request):
 
             filename = file.name
 
-            threading.Thread(target=lambda a: mv_file("decompressed", filename,".py"), args=(["world"])).start()
+            #threading.Thread(target=lambda a: mv_file(decompressed_output, filename,".py"), args=(["world"])).start()
 
-            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file("decompressed",filename, False))})
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file(decompressed_output,filename, False))})
         elif hash.password == argon(password):
             filename = file.name
 
-            threading.Thread(target=lambda a: mv_file("decompressed", filename,".py"), args=(["world"])).start()
+            #threading.Thread(target=lambda a: mv_file(decompressed_output, filename,".py"), args=(["world"])).start()
 
-            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file("decompressed",filename, False))})
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file(decompressed_output,filename, False))})
 
         else: return ErrorResponse("can't unlock file")
+
     else:
         return ErrorResponse("wrong method")
 
@@ -87,7 +92,7 @@ def getUrl(path):
 def mv_file(outputfolder, filename, extention=".gg"):
     #time.sleep(1)
     #os.system(f"mkdir ./{outputfolder}/")
-    os.system(f"mv ./media/{filename} ./{outputfolder}/{os.path.splitext(filename)[0]}{extention}")
+    os.system(f"mv {media}/{filename} {outputfolder}/{os.path.splitext(filename)[0]}{extention}")
 
 def compress(request):
     if request.method == "POST":
@@ -100,7 +105,7 @@ def compress(request):
         f.save()
         #generate hash
         hash = Hash(
-            value=hach("./media/"+file.name),
+            value=hach(f"{media}/"+file.name),
             filename=file.name,
             decompressed_size = file.size / 1000,      # to kb
             compressed_size   = file.size / 1000 / 10, # to kb but simulate smaller file hehe
@@ -116,16 +121,14 @@ def compress(request):
         user.save()
 
         url = "http://localhost:8000/"
-        outputfolder = "output"
 
        # token = file.name.split("_")[0]
 
         filename = file.name
-        print(filename)
 
-        threading.Thread(target=lambda a: mv_file(outputfolder, filename), args=(["world"])).start()
+        #threading.Thread(target=lambda a: mv_file(compressed_output, filename), args=(["world"])).start()
 
-        file_path = get_output_file(outputfolder, filename, False)
+        file_path = get_output_file(compressed_output, filename, False)
 
         hash.compressed_value = hach(file_path)
         hash.save()

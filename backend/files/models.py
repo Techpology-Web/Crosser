@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.files.storage import default_storage
 
+media = "../V8_2/COMP"
+
 class TempCrossFile(models.Model):
     file = models.ImageField(default=None, null=True)
 
@@ -32,7 +34,7 @@ class Hash(models.Model):
 
     def get_hash_from_file(file):
         from requestHandler import hach
-        return Hash.getHash(hach(f"./media/{file}"))
+        return Hash.getHash(hach(f"{media}/{file}"))
 
     def getHash(hash):
         hash_obj = Hash.objects.filter(value=hash)

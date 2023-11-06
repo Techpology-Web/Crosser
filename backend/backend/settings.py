@@ -16,14 +16,14 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../V8_2/COMP/')
+MEDIA_URL = 'media/'
 
-OUTPUT_URL = '/output/'
-OUTPUT_ROOT  = os.path.join(BASE_DIR, 'output')
+OUTPUT_URL = 'V8_2/CF'
+OUTPUT_ROOT  = os.path.join(BASE_DIR, '../V8_2/CF')
 
-DECOMPRESSED_URL = '/decompressed/'
-DECOMPRESSED_ROOT  = os.path.join(BASE_DIR, 'decompressed')
+DECOMPRESSED_URL = 'V8_2/DF/'
+DECOMPRESSED_ROOT  = os.path.join(BASE_DIR, '../V8_2/DF/')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
