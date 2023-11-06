@@ -125,7 +125,7 @@ export default function Home(props){
                   <td className="text-center">{file.filename}</td>
                   <td className="text-center">{parseFloat(file.decompressed_size/size).toFixed(2)} {label()}</td>
                   <td className="text-center">{parseFloat(file.compressed_size/size).toFixed(2)} {label()}</td>
-                  <td className="text-center">{parseFloat(file.compressed_size/file.decompressed_size*100).toFixed(2)} %</td>
+                  <td className="text-center">{parseFloat(file.compressed_size/file.decompressed_size).toFixed(2)} %</td>
                 </tr>
               )}
             </table>
