@@ -39,3 +39,4 @@ backend/security/.DS_Store
 backend/.DS_Store
 .DS_Store
 backend/.venv
+V8_2/*
