@@ -49,6 +49,8 @@ def decompress(request):
 
             #threading.Thread(target=lambda a: mv_file(decompressed_output, filename,".py"), args=(["world"])).start()
 
+            b = ""
+
             with open(get_output_file(decompressed_output,filename, False), "r") as f:
                 b = f.read()
             b = bytes.fromhex(b)
