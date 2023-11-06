@@ -29,18 +29,18 @@ export default function Home(props){
   const [data, setData] = useState();
   const [files, setFiles] = useState([])
 
-  const [fileSize, setFileSize] = useState(0);
+  const [fileSize, setFileSize] = useState(1);
   const [username, setUsername] = useState("")
 
-  const size = Math.pow(10,(fileSize+1)*3)
+  const size = Math.pow(10,fileSize*3)
   const label = () => {switch (fileSize){
     case 0:
-      return "KB"
-    break;
+      return "B"
     case 1:
-      return "MB"
-    break;
+      return "KB"
     case 2:
+      return "MB"
+    case 3:
       return "GB"
   }
   }
@@ -85,9 +85,10 @@ export default function Home(props){
       <div className="   flex flex-col md:grid grid-cols-2 grid-rows-2 gap-4 w-full h-[95%] p-6" >
         <Card className="w-full flex flex-row " >
           <div>
-            <Berit onChange={()=>setFileSize(2)} value={fileSize == 2} >GB</Berit>
-            <Berit onChange={()=>setFileSize(1)} value={fileSize == 1} >MB</Berit>
-            <Berit onChange={()=>setFileSize(0)} value={fileSize == 0} >KB</Berit>
+            <Berit onChange={()=>setFileSize(3)} value={fileSize == 3} >GB</Berit>
+            <Berit onChange={()=>setFileSize(2)} value={fileSize == 2} >MB</Berit>
+            <Berit onChange={()=>setFileSize(1)} value={fileSize == 1} >KB</Berit>
+            <Berit onChange={()=>setFileSize(0)} value={fileSize == 0} >B</Berit>
           </div>
           <div className="flex flex-col w-full items-center justify-center ">
             <h1>Your database</h1>
