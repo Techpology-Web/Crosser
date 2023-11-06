@@ -47,10 +47,9 @@ def decompress(request):
 
             filename = file.name
 
-            #threading.Thread(target=lambda a: mv_file(decompressed_output, filename,".py"), args=(["world"])).start()
-
             b = ""
             a = get_output_file(decompressed_output,filename, False)
+
             with open(a, "r") as f:
                 b = f.read()
             b = bytes.fromhex(b)
@@ -117,7 +116,7 @@ def compress(request):
             value=hach(f"{media}/"+file.name),
             filename=file.name,
             decompressed_size = file.size / 1000,      # to kb
-            compressed_size   = file.size / 1000 / 10, # to kb but simulate smaller file hehe
+            compressed_size   = -1
         )
         hash.save()
         user.hashes.add(hash)
@@ -125,8 +124,8 @@ def compress(request):
         print(file.read())
 
         # saves the size of uploaded file
-        user.decompressed_size += ( ( file.size ) / 1000      ) # kbites
-        user.compressed_size   += ( ( file.size ) / 1000 / 10 ) # kbites
+        user.decompressed_size += ( ( file.size ) / 1000  ) # kbites
+        #user.compressed_size   += ( ( file.size ) / 1000  ) # kbites
         user.save()
 
         url = "http://localhost:8000/"
@@ -138,6 +137,11 @@ def compress(request):
         #threading.Thread(target=lambda a: mv_file(compressed_output, filename), args=(["world"])).start()
 
         file_path = get_output_file(compressed_output, filename, False)
+
+        file_stats = os.stat(file_path)
+        hash.compressed_size = file_stats.st_size;
+        hash.save()
+        user.compressed_size += file_stats.st_size;
 
         hash.compressed_value = hach(file_path)
         hash.save()
