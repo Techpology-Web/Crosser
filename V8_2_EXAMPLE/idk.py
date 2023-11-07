@@ -7,6 +7,7 @@ while True:
         for name in files:
             path = (os.path.join(root, name))
             print(path)
+
             if "cff" in name:
                 os.system(f"mv {path} ./DF/{name.split('.')[0]}.png")
             else:
