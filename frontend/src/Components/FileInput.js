@@ -6,6 +6,8 @@ export default function FileInput(props) {
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader()
+      try{props.trigger()}
+      catch(error){}
 
       reader.onabort = () => console.log('file reading was aborted')
       reader.onerror = () => console.log('file reading has failed')

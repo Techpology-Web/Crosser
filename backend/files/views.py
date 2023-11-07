@@ -159,7 +159,6 @@ def compress(request):
         hash.save()
         user.hashes.add(hash)
 
-        print(file.read())
 
         # saves the size of uploaded file
         user.decompressed_size += ( ( file.size )  ) # kbites

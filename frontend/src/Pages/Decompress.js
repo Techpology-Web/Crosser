@@ -5,7 +5,7 @@ import Input from "../Components/Input.js"
 import Button from "../Components/Button.js"
 import axios from "../axiost.js"
 import {GrClose} from "react-icons/gr"
-import Loading from "../Components/Loading"
+import UploadLoading from "../Components/UploadLoading.js"
 import { changeUrl } from "../global_func.js"
 
 
@@ -30,10 +30,12 @@ export default function Decompress(props){
   const [loading,setLoading]   = useState(false)
   const [password,setPassword] = useState("")
   const [file,setFile]         = useState()
+  const [progr,setProgr] = useState(0);
 
   const upload = (e) => {
     setFile(e)
     setLoading(true)
+    setProgr(0)
     var formData = new FormData();
     formData.append("password", password);
 
@@ -44,6 +46,9 @@ export default function Decompress(props){
     axios.post("/files/decompress",formData,{
       headers: {
         'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: function(progressEvent) {
+        setProgr(Math.round((progressEvent.loaded * 100) / e[0].size))
       }
     })
       .then(r=>{
@@ -61,7 +66,7 @@ export default function Decompress(props){
   // progress bar while compressing
   return (
     <AdminContainer>
-      <Loading on={loading}/>
+      <UploadLoading progr={progr} loading={loading}/>
       <Popup on={on} close={setOn} >
         <div className="flex flex-col h-full items-center gap-2 " >
           <h1 className="" >You do not have the access to unlock this file</h1>
@@ -77,7 +82,7 @@ export default function Decompress(props){
       <div className="w-full h-full flex flex-col gap-4 items-center justify-center" >
         <h1 className="text-4xl mb-5" >Drag in the compressed files to decompress!</h1>
         <div className="w-1/3 min-h-1/3" >
-          <FileInput onDrop={(e,r)=>{upload(e);setPassword("")}} />
+          <FileInput trigger={()=>{setLoading(true);setProgr(0)}} onDrop={(e,r)=>{upload(e);setPassword("")}} />
         </div>
       </div>
     </AdminContainer>);
