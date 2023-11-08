@@ -25,6 +25,7 @@ def get_size(start_path = '.'):
                 total_size += os.path.getsize(fp)
 
     return total_size
+
 def getCompSize():
     comp_size = 0
     with open(compressed_size,"r") as f:
@@ -41,8 +42,8 @@ def getDbSize(request):
         comp_size = getCompSize()
 
         bod = {
-            "compressed_size":comp_size,
-            "decompressed_size":get_size()/2
+            "compressed_size": get_size()/2,
+            "decompressed_size":comp_size
         }
 
         return HttpResponse(json.dumps(bod))
@@ -62,8 +63,6 @@ def get_files(request):
             del hashd["_state"]
             hashes.append(hashd)
         return JsonResponse({"hashes":hashes})
-
-
 
 def decompress(request):
     if request.method == "POST":
