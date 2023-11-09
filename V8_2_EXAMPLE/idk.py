@@ -8,7 +8,7 @@ while True:
             path = (os.path.join(root, name))
             print(path)
 
-            if "cff" in name:
+            if "ccf" in name:
                 os.system(f"mv {path} ./DF/{name.split('.')[0]}.png")
             else:
-                os.system(f"mv {path} ./CF/{name.split('.')[0]}.cff")
+                os.system(f"mv {path} ./CF/{name.split('.')[0]}.ccf")
