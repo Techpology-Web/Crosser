@@ -127,11 +127,10 @@ def get_output_file(folder, filename, extention=True):
         print(f"./{folder}/{filename} does not exist")
         time.sleep(2)
 
-    url = "http://localhost:8000/"
     return glob.glob(f"./{folder}/{filename}.*")[0]
 
 def getUrl(path):
-    url = "http://localhost:8000"
+    url = "http://213.21.99.94:8000"
     return url+(path[1:])
 
 def mv_file(outputfolder, filename, extention=".gg"):
