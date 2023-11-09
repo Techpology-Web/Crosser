@@ -62,8 +62,8 @@ export default function Signup(props){
     // navigator.geolocation.getCurrentPosition(
 
     //   (position) => {
-    const lat = position.coords.latitude;
-    const long = position.coords.longitude;
+    // const lat = position.coords.latitude;
+    // const long = position.coords.longitude;
 
 
     //   },
