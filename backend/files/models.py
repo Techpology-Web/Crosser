@@ -5,7 +5,7 @@ from backend.settings import V8ROOT
 media = f"../{V8ROOT}/COMP"
 
 class TempCrossFile(models.Model):
-    file = models.ImageField(default=None, null=True)
+    file = models.FileField(default=None, null=True)
 
     def save(self, *args, **kwargs):
         # this code will loop though and check if

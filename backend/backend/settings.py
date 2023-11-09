@@ -16,7 +16,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-V8ROOT = "V8_2_EXAMPLE"
+V8ROOT = "V8_2"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, f'../{V8ROOT}/COMP/')
 MEDIA_URL = 'media/'
