@@ -72,10 +72,10 @@ export default function Signup(props){
     //   }
     // );
 
-  else {
-    // Geolocation is not supported by the browser
-    setError("Geolocation is not supported by this browser.");
-  }
+  // else {
+  //   // Geolocation is not supported by the browser
+  //   setError("Geolocation is not supported by this browser.");
+  // }
   }
     
   return (
