@@ -35,7 +35,7 @@ export default function Decompress(props){
   const [error,setError]       = useState("");
 
   const upload = (e) => {
-    if(!e[0].path.includes(".cff")){
+    if(!e[0].path.includes(".ccf")){
       setError("Wrong file format, use compressed files (*.ccf)")
       return 0
     }
