@@ -32,38 +32,46 @@ export default function Signup(props){
 
   const navigate = useNavigate();
 
+  const gin = (long,lat) =>{
+
+    axois.post("identification/log_in/",{
+        username:username,
+        password:password,
+        long:long,
+        lat:lat,
+      })
+        .then(r=>{
+
+          setLoading(false)
+          setCookie("sessionKey",r.data.sessionKey)
+          window.location.href = "/";
+
+        })
+        .catch(error=>{
+          setError(error.response.data.code)
+          setUsername("");
+        });
+
+  }
+
   const signin = () =>{
-  if ("geolocation" in navigator) {
     setLoading(true)
-    navigator.geolocation.getCurrentPosition(
+    gin(0,0);
+  //if ("geolocation" in navigator) {
+    setLoading(true)
+    // navigator.geolocation.getCurrentPosition(
 
-      (position) => {
+    //   (position) => {
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
 
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        axois.post("identification/log_in/",{
-            username:username,
-            password:password,
-            long:long,
-            lat:lat,
-          })
-            .then(r=>{
 
-              setLoading(false)
-              setCookie("sessionKey",r.data.sessionKey)
-              window.location.href = "/";
+    //   },
+    //   (error) => {
+    //     setError("Error getting user location:", error);
+    //   }
+    // );
 
-            })
-            .catch(error=>{
-              setError(error.response.data.code)
-              setUsername("");
-            });
-
-      },
-      (error) => {
-        setError("Error getting user location:", error);
-      }
-    );
   } else {
     // Geolocation is not supported by the browser
     setError("Geolocation is not supported by this browser.");
