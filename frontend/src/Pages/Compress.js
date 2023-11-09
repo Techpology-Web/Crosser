@@ -18,7 +18,11 @@ export default function Compress(props){
     var formData = new FormData();
     // create better token
     const token = new Date().getMilliseconds();
-    formData.append("file", new File([e[0]], token+"_"+e[0].path, { type:e[0].type }));
+
+    let fileName = (token+"_"+e[0].path).replace(" ","-");
+
+    formData.append("file", new File([e[0]], fileName, { type:e[0].type }));
+
     axios.post("/files/compress",formData,{
       headers: {
         'Content-Type': 'multipart/form-data',

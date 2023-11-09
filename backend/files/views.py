@@ -42,8 +42,8 @@ def getDbSize(request):
         comp_size = getCompSize()
 
         bod = {
-            "compressed_size": get_size()/2,
-            "decompressed_size":comp_size
+            "decompressed_size": get_size()/2,
+            "compressed_size":comp_size
         }
 
         return HttpResponse(json.dumps(bod))
@@ -64,6 +64,24 @@ def get_files(request):
             hashes.append(hashd)
         return JsonResponse({"hashes":hashes})
 
+def hexToBytes(filename):
+    buffer = ""
+    path = get_output_file(decompressed_output,filename, False)
+    print(path)
+    # convert file contetns from hex to bytes
+    try:
+        with open(path, "r") as f:
+            buffer = f.read()
+        buffer = bytes.fromhex(buffer)
+
+        with open(path,"wb") as f:
+            f.write(buffer)
+        print("changed from hex to bytes succesfully")
+    except:
+        pass
+    return path
+
+
 def decompress(request):
     if request.method == "POST":
         user = extractSession(request)
@@ -74,6 +92,7 @@ def decompress(request):
         file = request.FILES["file"]
         f = TempCrossFile(file=file)
         f.save()
+
         hash = Hash.get_hash_from_file(file.name)
         if hash == None: return ErrorResponse("file not found")
 
@@ -81,26 +100,13 @@ def decompress(request):
 
             filename = file.name
 
-            b = ""
-            a = get_output_file(decompressed_output,filename, False)
-
-            try:
-                with open(a, "r") as f:
-                    b = f.read()
-                b = bytes.fromhex(b)
-
-                with open(a,"wb") as f:
-                    f.write(b)
-            except:
-                pass
-
-            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(a)})
+            path = hexToBytes(filename)
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(path)})
         elif hash.password == argon(password):
             filename = file.name
 
-            #threading.Thread(target=lambda a: mv_file(decompressed_output, filename,".py"), args=(["world"])).start()
-
-            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(get_output_file(decompressed_output,filename, False))})
+            path = hexToBytes(filename)
+            return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(path)})
 
         else: return ErrorResponse("can't unlock file")
 
@@ -130,7 +136,9 @@ def get_output_file(folder, filename, extention=True):
     return glob.glob(f"./{folder}/{filename}.*")[0]
 
 def getUrl(path):
-    url = "http://213.21.99.94:8000"
+
+    #url = "http://213.21.99.94:8000"
+    url = "http://localhost:8000"
     return url+(path[1:])
 
 def mv_file(outputfolder, filename, extention=".gg"):
@@ -161,7 +169,6 @@ def compress(request):
         # saves the size of uploaded file
         user.decompressed_size += ( ( file.size )  ) # kbites
 
-        url = "http://localhost:8000/"
 
        # token = file.name.split("_")[0]
 

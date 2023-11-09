@@ -48,6 +48,7 @@ export default function Signup(props){
 
         })
         .catch(error=>{
+          setLoading(false);
           setError(error.response.data.code)
           setUsername("");
         });

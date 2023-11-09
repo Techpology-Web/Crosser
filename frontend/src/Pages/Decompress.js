@@ -46,8 +46,10 @@ export default function Decompress(props){
     formData.append("password", password);
 
     //const token = new Date().getMilliseconds();
-    console.log(e[0])
-    formData.append("file", e[0]);
+    let fileName = (e[0].path).replace(" ","-");
+    console.log(fileName)
+
+    formData.append("file", new File([e[0]], fileName, { type:e[0].type }));
 
     axios.post("/files/decompress",formData,{
       headers: {

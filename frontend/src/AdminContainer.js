@@ -1,6 +1,8 @@
 import React ,{useState, useEffect} from "react"
 import MenuItem from "./Components/MenuItem.js"
 import Searchbar from "./Components/Searchbar.js"
+import { changeUrl } from "./global_func.js";
+
 import {AiOutlineArrowRight, AiOutlineArrowLeft} from "react-icons/ai"
 import axois from "./axiost"
 
@@ -16,14 +18,14 @@ export default function AdminContainer(props){
          .then(r=>{
            setIsAdmin(r.data.is_admin)
          })
-         .catch(error=>console.error)
+         .catch(error=>changeUrl("/signin"))
 
   },[])
 
 
   return (
     <div className="flex flex-row w-screen h-screen relative bg-[#F4F4F8]  " >
-      <div className={`p-4 h-full w-[320px] duration-100 fixed md:relative z-10 ${ open ? "" : "scale-0 -mr-[320px]"}`}  >
+      <div className={`p-4 h-full w-[320px] duration-100 fixed md:relative z-10 ${ open ? "relative" : "scale-0 -mr-[320px]"}`}  >
         <div className="p-4 shadow-lg w-full bg-[#fefefe] rounded-3xl h-full " >
           <div className="flex flex-row gap-1 items-center mb-10" >
             <img src={"./logo.png"} alt="Logo" />
@@ -41,10 +43,16 @@ export default function AdminContainer(props){
 
 
         </div>
+        <div
+          onClick={()=>setOpen(!open)}
+          className={`absolute ${open ? "-right-3" : "hidden "} hover:bg-slate-50 bottom-8 z-20 bg-white shadow-lg hover:scale-110 select-none cursor-pointer duration-100 rounded-full flex items-center justify-center w-[50px] h-[50px]`}>
+          {(open?<AiOutlineArrowLeft/>:<AiOutlineArrowRight />)}
+
+        </div>
       </div>
       <div 
         onClick={()=>setOpen(!open)}
-        className={`absolute ${open ? "" : "-left-3 "} hover:bg-slate-50 bottom-8 z-20 bg-white shadow-lg hover:scale-110 select-none cursor-pointer duration-100 rounded-full flex items-center justify-center w-[50px] h-[50px]`}>
+        className={`absolute ${open ? "hidden" : "-left-3 "} hover:bg-slate-50 bottom-8 z-20 bg-white shadow-lg hover:scale-110 select-none cursor-pointer duration-100 rounded-full flex items-center justify-center w-[50px] h-[50px]`}>
         {(open?<AiOutlineArrowLeft/>:<AiOutlineArrowRight />)}
         
       </div>

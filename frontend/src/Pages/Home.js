@@ -57,17 +57,17 @@ export default function Home(props){
       setUsername(r.data.username)
       setIsAdmin(r.data.is_admin)
       if(r.data.is_admin){
-
+        // fetches real db sizes
         axios.post("/files/get_db_size",{})
           .then(r=>{
               setDbSize([
                 {
                   name:"Datebase without compressing",
-                  size: r.data.decompressed_size
+                  size: r.data.decompressed_size/size
                 },
                 {
                   name:"Datebase with compressing",
-                  size: r.data.compressed_size
+                  size: r.data.compressed_size/size
                 }
               ])
           })
@@ -78,11 +78,11 @@ export default function Home(props){
       setBarData([
         {
           name: 'Database without compressing',
-          size: r.data.decompressed_size / Math.pow(10,fileSize),
+          size: r.data.decompressed_size / size,
         },
         {
           name: 'Databse with compressing',
-          size: r.data.compressed_size / Math.pow(10,fileSize),
+          size: r.data.compressed_size / size,
         },
       ])
 
@@ -97,7 +97,7 @@ export default function Home(props){
     .then(r=>{
       let d = []
       for(let i = 0; i < r.data.hashes.length;i++){
-        d.push({filename: `file-${i}`, compressed_size:r.data.hashes[i].compressed_size/Math.pow(10,fileSize), decompressed_size: r.data.hashes[i].decompressed_size/Math.pow(10,fileSize)})
+        d.push({filename: `file-${i}`, compressed_size:r.data.hashes[i].compressed_size/size, decompressed_size: r.data.hashes[i].decompressed_size/size})
       }
       setFiles(r.data.hashes)
       setData(d)
@@ -137,7 +137,7 @@ export default function Home(props){
           </div>
         </Card>
         <div className="flex flex-col md:flex-row bg-[#fefefe] rounded-lg col-span-2 p-0 gap-4" >
-          <div className="bg-[#222] lg:w-2/3 overflow-auto md:w-full items-center flex flex-col text-white rounded-l-lg p-4 "  >
+          <div className="bg-[#222] lg:w-2/3 overflow-auto md:w-full max-h-[500px] items-center flex flex-col text-white rounded-l-lg p-4 "  >
             <h1>History</h1>
             <table className="w-full " >
               <tr>
