@@ -1,13 +1,14 @@
 import logo from '../Components/load.gif'
+import PopUp from '../Components/PopUp'
 import React from "react"
+
+
 
 
 export default function(props){
 
-
   return(
-    <div className={`fixed flex flex-col justify-center items-center left-0 z-20 top-0 bg-black bg-opacity-25 h-screen w-screen ${props.loading?"":"hidden"}`}>
-        <div className="flex flex-col items-center p-4 rounded-lg justify-center w-1/4  bg-white">
+    <PopUp on={props.loading} >
           {props.progr==100? (
             <React.Fragment>
               <h1>Upload sucessfull</h1>
@@ -18,8 +19,6 @@ export default function(props){
                  <h1>{props.progr}</h1>
                  <progress id="file" value={props.progr} max="100"></progress>
                </>)}
-        </div>
-      </div>
-
+    </PopUp>
   )
 }

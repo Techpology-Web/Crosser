@@ -3,8 +3,17 @@ import {useDropzone} from 'react-dropzone';
 
 export default function FileInput(props) {
 
+  const [error,setError] = useState("Wrong file format")
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
+
+      // if(!file.path.includes(".ccf")){
+      //   setError("Wrong file format, use compressed files (*.ccf)")
+      //   alert("Wrong file format, use compressed files (*.ccf)")
+      //   return
+      // }
+
       const reader = new FileReader()
       try{props.trigger()}
       catch(error){}
@@ -13,7 +22,7 @@ export default function FileInput(props) {
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => {
       // Do whatever you want with the file contents
-        const binaryStr = reader.result
+      const binaryStr = reader.result
         props.onDrop(acceptedFiles,reader);
       }
       reader.readAsText(file)
@@ -33,7 +42,7 @@ export default function FileInput(props) {
   return (
     <section className="container flex flex-col gap-4 w-full h-full bg-[#fefefe] p-4 rouded-4  ">
       <div {...getRootProps({className: 'dropzone bg-[#FAFAFA] p-12 text-xl text-[#727272] border border-dashed '})}>
-        <input {...getInputProps()} />
+        <input  {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
       <aside>

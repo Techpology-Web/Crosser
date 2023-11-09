@@ -4,6 +4,7 @@ import FileInput from "../Components/FileInput.js"
 import Input from "../Components/Input.js"
 import Button from "../Components/Button.js"
 import axios from "../axiost.js"
+import PopUp from "../Components/PopUp"
 import {GrClose} from "react-icons/gr"
 import UploadLoading from "../Components/UploadLoading.js"
 import { changeUrl } from "../global_func.js"
@@ -30,9 +31,14 @@ export default function Decompress(props){
   const [loading,setLoading]   = useState(false)
   const [password,setPassword] = useState("")
   const [file,setFile]         = useState()
-  const [progr,setProgr] = useState(0);
+  const [progr,setProgr]       = useState(0);
+  const [error,setError]       = useState("");
 
   const upload = (e) => {
+    if(!e[0].path.includes(".cff")){
+      setError("Wrong file format, use compressed files (*.ccf)")
+      return 0
+    }
     setFile(e)
     setLoading(true)
     setProgr(0)
@@ -67,6 +73,10 @@ export default function Decompress(props){
   return (
     <AdminContainer>
       <UploadLoading progr={progr} loading={loading}/>
+      <PopUp on={error!=""}>
+        <h1>{error}</h1>
+        <Button onClick={()=>{setError("");setLoading(false)}} >Okay!</Button>
+      </PopUp>
       <Popup on={on} close={setOn} >
         <div className="flex flex-col h-full items-center gap-2 " >
           <h1 className="" >You do not have the access to unlock this file</h1>
