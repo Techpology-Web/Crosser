@@ -18,14 +18,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/Home" element={<Home />}></Route>
-        <Route exact path="/God" element={<God />}></Route>
-        <Route exact path="/settings" element={<Home />}></Route>
-        <Route exact path="/compress" element={<Compress />}></Route>
-        <Route exact path="/decompress" element={<Decompress />}></Route>
-        <Route exact path="/share" element={<Share />}></Route>
-        <Route exact path="/signup" element={<Signup />}></Route>
-        <Route exact path="/" element={<Signin />}></Route>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route path="/God" element={<God />}></Route>
+        <Route path="/settings" element={<Home />}></Route>
+        <Route path="/compress" element={<Compress />}></Route>
+        <Route path="/decompress" element={<Decompress />}></Route>
+        <Route path="/share" element={<Share />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/signin" element={<Signin />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -26,10 +26,6 @@ export default function Signup(props){
     });
   }
 
-  useEffect(()=>{
-
-  })
-
   const navigate = useNavigate();
 
   const gin = (long,lat) =>{
@@ -44,7 +40,7 @@ export default function Signup(props){
 
           setLoading(false)
           setCookie("sessionKey",r.data.sessionKey)
-          navigate.navigate("/home")
+          navigate.navigate("/")
 
         })
         .catch(error=>{
