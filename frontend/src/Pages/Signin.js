@@ -58,21 +58,22 @@ export default function Signup(props){
   const signin = () =>{
     setLoading(true)
     if ("geolocation" in navigator) {
-    setLoading(true)
-    navigator.geolocation.getCurrentPosition(
+      setLoading(true)
+      navigator.geolocation.getCurrentPosition(
 
-      (position) => {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        gin(long,lat);
+        (position) => {
+          const lat = position.coords.latitude;
+          const long = position.coords.longitude;
+          gin(long,lat);
 
-      },
-      (error) => {
-        setError("Error getting user location:", error);
-      }
-    );
-
+        },
+        (error) => {
+          setError("Error getting user location:", error);
+        }
+      );
+    }
   else {
+
     // Geolocation is not supported by the browser
     setError("Geolocation is not supported by this browser.");
   }
