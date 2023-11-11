@@ -1,11 +1,10 @@
 import React, { useState, useEffect} from "react"
 import Input from "../Components/Input.js"
 import Button from "../Components/Button.js"
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate} from "react-router-dom";
 import axois from "../axiost"
 import { setCookie  } from "../CookieHandler"
 import { changeUrl } from "../global_func.js";
-
 
 export default function Signup(props){
   
@@ -13,7 +12,7 @@ export default function Signup(props){
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
 
   const signup = () =>{
     axois.post("identification/create_user/",{
@@ -21,7 +20,7 @@ export default function Signup(props){
       password:password
     })
       .then(r=>{
-        changeUrl("signin")
+        navigate.navigate("/")
       })
       .catch(error=>{
         setError(error.response.data.code)

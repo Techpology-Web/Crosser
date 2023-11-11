@@ -44,7 +44,7 @@ export default function Signup(props){
 
           setLoading(false)
           setCookie("sessionKey",r.data.sessionKey)
-          window.location.href = "/";
+          navigate.navigate("/home")
 
         })
         .catch(error=>{
