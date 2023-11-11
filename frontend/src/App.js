@@ -4,7 +4,7 @@ import {useEffect} from "react"
 import axios from "./axiost"
 import {setCookie} from "./CookieHandler.js"
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home.js"
 import Share from "./Pages/Share.js"
 import Compress from "./Pages/Compress.js"
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Switch>
+      <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/God" element={<God />}></Route>
         <Route path="/settings" element={<Home />}></Route>
@@ -26,7 +26,7 @@ function App() {
         <Route path="/share" element={<Share />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/signin" element={<Signin />}></Route>
-      </Switch>
+      </Routes>
     </BrowserRouter>
   );
 }
