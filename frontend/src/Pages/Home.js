@@ -90,7 +90,7 @@ export default function Home(props){
     })
     .catch(error=>{
       if(error.response.data.code == "no session"){
-        changeUrl("/signin")
+        //changeUrl("/signin")
       }
     })
 

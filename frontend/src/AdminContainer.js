@@ -22,7 +22,9 @@ export default function AdminContainer(props){
            setIsAdmin(r.data.is_admin)
            setName(r.data.username)
          })
-         .catch(error=>changeUrl("/signin"))
+         .catch(error=>{
+           //changeUrl("/signin")
+         })
 
   },[])
 
