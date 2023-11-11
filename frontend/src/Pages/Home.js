@@ -27,6 +27,7 @@ export default function Home(props){
   
   const [barData, setBarData] = useState();
   const [data, setData] = useState();
+  const [lineProcentData, setLineProcentData] = useState({});
   const [files, setFiles] = useState([])
 
   const [fileSize, setFileSize] = useState(1);
@@ -96,11 +97,24 @@ export default function Home(props){
     axios.post("/files/get_files",{})
     .then(r=>{
       let d = []
+      let dp = []
       for(let i = 0; i < r.data.hashes.length;i++){
-        d.push({filename: `file-${i}`, compressed_size:r.data.hashes[i].compressed_size/size, decompressed_size: r.data.hashes[i].decompressed_size/size})
+        let compressed = r.data.hashes[i].compressed_size / size;
+        let decompressed = r.data.hashes[i].decompressed_size / size;
+        d.push({
+          filename: `file-${i}`,
+          compressed_size  : compressed,
+          decompressed_size: decompressed
+        })
+        dp.push({
+          filename: `file-${i}`,
+          procent : decompressed > 0 ? compressed/decompressed*100 : 100,
+        })
       }
+      console.log(dp)
       setFiles(r.data.hashes)
       setData(d)
+      setLineProcentData(dp)
     })
     .catch(error=>{alert(error.response.data.code)})
 
@@ -128,13 +142,13 @@ export default function Home(props){
           </div>
         </Card>
         <Card className="flex flex-col items-center" >
-          <h1>Your account</h1>
-          <div className="flex flex-row h-1/2 w-full" >
-            <HiUserCircle className="w-1/3 h-full text-gray-500" />
-            <div className="mt-5 " >
-              <h1 className="text-3xl" >{username}</h1>
-            </div>
-          </div>
+          <ResponsiveContainer width="100%" >
+              <LineChart data={lineProcentData}>
+                  <Line type="monotone" dataKey="procent"   stroke="#8884d8" />
+                  <XAxis dataKey="filename" />
+                  <YAxis />
+              </LineChart>
+          </ResponsiveContainer>
         </Card>
         <div className="flex flex-col md:flex-row bg-[#fefefe] rounded-lg col-span-2 p-0 gap-4" >
           <div className="bg-[#222] lg:w-2/3 overflow-auto md:w-full max-h-[500px] items-center flex flex-col text-white rounded-l-lg p-4 "  >
