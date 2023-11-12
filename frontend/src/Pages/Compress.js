@@ -47,7 +47,7 @@ export default function Compress(props){
       <UploadLoading progr={progr} loading={loading} />
       <div className="w-full h-full flex flex-col gap-4 items-center justify-center" >
         <h1 className="text-4xl mb-5" >Drag in files to compress!</h1>
-        <div className="w-1/3 min-h-1/3" >
+        <div className="md:w-1/3 min-h-1/3" >
           <FileInput trigger={()=>{setLoading(true);setProgr(0)}} onDrop={upload} />
         </div>
       </div>

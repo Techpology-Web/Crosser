@@ -3,8 +3,6 @@ import PopUp from '../Components/PopUp'
 import React from "react"
 
 
-
-
 export default function(props){
 
   return(
@@ -12,7 +10,7 @@ export default function(props){
           {props.progr==100? (
             <React.Fragment>
               <h1>Upload sucessfull</h1>
-              <img className="w-[250px] h-[170px]" src={logo} alt="loading..." />
+              <img className="md:w-[250px] h-[170px]" src={logo} alt="loading..." />
               <h1>Waiting for the compression</h1>
             </React.Fragment>
           ) : (<>

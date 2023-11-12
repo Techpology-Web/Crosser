@@ -122,7 +122,7 @@ export default function Home(props){
 
   return (
     <AdminContainer>
-      <div className="   flex flex-col md:grid grid-cols-2 grid-rows-2 gap-4 w-full h-[95%] p-6" >
+      <div className="flex flex-col md:grid grid-cols-2 grid-rows-2 gap-4 w-full h-[95%] p-6" >
         <Card className="w-full flex flex-row " >
           <div>
             <Berit onChange={()=>setFileSize(3)} value={fileSize == 3} >GB</Berit>
@@ -141,7 +141,8 @@ export default function Home(props){
             </ResponsiveContainer>
           </div>
         </Card>
-        <Card className="flex flex-col items-center" >
+        <Card className="flex flex-col h-full items-center" >
+          <h1>Compressed files procentage</h1>
           <ResponsiveContainer width="100%" >
               <LineChart data={lineProcentData}>
                   <Line type="monotone" dataKey="procent"   stroke="#8884d8" />
@@ -150,7 +151,7 @@ export default function Home(props){
               </LineChart>
           </ResponsiveContainer>
         </Card>
-        <div className="flex flex-col md:flex-row bg-[#fefefe] rounded-lg col-span-2 p-0 gap-4" >
+        <div className="flex flex-col h-full md:flex-row bg-[#fefefe] rounded-lg col-span-2 p-0 gap-4" >
           <div className="bg-[#222] lg:w-2/3 overflow-auto md:w-full max-h-[500px] items-center flex flex-col text-white rounded-l-lg p-4 "  >
             <h1>History</h1>
             <table className="w-full " >
@@ -170,7 +171,8 @@ export default function Home(props){
               )}
             </table>
           </div>
-          <div className="p-4 w-full" >
+          <div className="p-4 h-1/2 w-full" >
+            <h1>File size before and after compressing</h1>
             <ResponsiveContainer width="100%" >
                 <LineChart data={data}>
                     <Line type="monotone" dataKey="compressed_size"   stroke="#8884d8" />
