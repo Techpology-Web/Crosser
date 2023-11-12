@@ -95,7 +95,7 @@ export default function Signup(props){
           <h1 className="text-[#727272] text-lg " >Don't have an accound?</h1>
           <Link to="/Signup" className="duration-100 cursor-pointer hover:text-[#8176ee] text-[#7165ff]" >Sign up instead</Link>
         </div>
-        <Button onClick={signin} >SIGN IN</Button>
+        <Button onClick={()=>{signin()}} >SIGN IN</Button>
       </div>
     </div>
   );
