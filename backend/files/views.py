@@ -137,8 +137,8 @@ def get_output_file(folder, filename, extention=True):
 
 def getUrl(path):
 
-    #url = "http://213.21.99.94:8000"
-    url = "http://localhost:8000"
+    url = "https://cross.techpology.com"
+    #url = "http://localhost:8000"
     return url+(path[1:])
 
 def mv_file(outputfolder, filename, extention=".gg"):
