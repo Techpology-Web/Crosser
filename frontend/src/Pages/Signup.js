@@ -20,7 +20,7 @@ export default function Signup(props){
       password:password
     })
       .then(r=>{
-        navigate.navigate("/signin")
+        navigate("/signin")
       })
       .catch(error=>{
         setError(error.response.data.code)

@@ -37,14 +37,14 @@ export default function Signup(props){
         lat:lat,
       })
         .then(r=>{
-
           setLoading(false)
           setCookie("sessionKey",r.data.sessionKey)
-          navigate.navigate("/")
+          navigate("/")
 
         })
         .catch(error=>{
           setLoading(false);
+          console.log(JSON.stringify(error))
           setError(error.response.data.code)
           setUsername("");
         });
@@ -69,7 +69,6 @@ export default function Signup(props){
       );
     }
   else {
-
     // Geolocation is not supported by the browser
     setError("Geolocation is not supported by this browser.");
   }
