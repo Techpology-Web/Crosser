@@ -14,7 +14,7 @@ export function getCookie(cname) {
       return localStorage.getItem(cname);
     }
   } catch (e) {
-    getCookie__(cname);
+    return getCookie__(cname);
   }
 }
 

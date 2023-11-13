@@ -39,7 +39,7 @@ function SelectUsers(props){
     ));
 
   return (
-    <div className={`absolute ${!props.on ? "-right-[500px] scale-x-0 " : "right-0 "} duration-[1s]  z-40 p-4 rounded-xl w-[400px] bg-[#fefefe] h-full flex flex-col gap-4 `} >
+    <div className={`absolute ${!props.on ? "-right-[500px] scale-x-0 " : "right-0 "} duration-[1s]  z-40 p-4 rounded-xl  bg-[#fefefe] h-full flex flex-col gap-4 `} >
 
       <div className="flex flex-row gap-2" >
         <Button className="w-fit" onClick={props.close} >Close</Button>

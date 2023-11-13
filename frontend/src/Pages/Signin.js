@@ -4,7 +4,7 @@ import Button from "../Components/Button.js"
 import Checkbox from "../Components/Checkbox.js"
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import axois from "../axiost"
-import {setCookie} from "../CookieHandler.js"
+import {getCookie,setCookie} from "../CookieHandler.js"
 import Loading from "../Components/Loading.js";
 
 export default function Signup(props){
@@ -17,16 +17,21 @@ export default function Signup(props){
   const [lat,setLat] = useState(0);
   const [loading, setLoading] = useState(false)
 
-
-  const setLocation = () => {
-    console.log("set")
-    navigator.geolocation.getCurrentPosition(function(position) {
-      setLong(position.coords.latitude);
-      setLat(position.coords.longitude);
-    });
-  }
-
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(getCookie("sessionKey")!==""){
+      axois.post("identification/get_user_info/")
+           .then(r=>{
+             navigate("/home")
+           })
+           .catch(error=>{
+
+           })
+    }
+  },[])
+
+
 
   const gin = (long,lat) =>{
 
@@ -39,7 +44,7 @@ export default function Signup(props){
         .then(r=>{
           setLoading(false)
           setCookie("sessionKey",r.data.sessionKey)
-          navigate("/")
+          navigate("/home")
 
         })
         .catch(error=>{
