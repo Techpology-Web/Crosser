@@ -127,11 +127,11 @@ def get_output_file(folder, filename, extention=True):
         filename = base
 
 
-    while not glob.glob(f"./{folder}/{filename}.*"):
-        print(f"./{folder}/{filename} does not exist")
+    while not glob.glob(f"/{folder}/{filename}.*"):
+        print(f"/{folder}/{filename} does not exist")
         time.sleep(2)
 
-    return glob.glob(f"./{folder}/{filename}.*")[0]
+    return glob.glob(f"/{folder}/{filename}.*")[0]
 
 def getUrl(path):
 
