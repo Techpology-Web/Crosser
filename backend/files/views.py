@@ -78,7 +78,7 @@ def hexToBytes(filename):
             f.write(buffer)
         print("changed from hex to bytes succesfully")
     except Exception as e:
-        pass
+        print(str(e))
     return path
 
 
