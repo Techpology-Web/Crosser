@@ -16,16 +16,16 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-V8ROOT = "V8_2"
+V8ROOT = "/home/techpology/V8_a/V8_2"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, f'../{V8ROOT}/COMP/')
+MEDIA_ROOT = f'{V8ROOT}/COMP/'
 MEDIA_URL = 'media/'
 
-OUTPUT_URL = f'{V8ROOT}/CF'
-OUTPUT_ROOT  = os.path.join(BASE_DIR, f'../{V8ROOT}/CF')
+OUTPUT_URL = f'/CF'
+OUTPUT_ROOT  = f'{V8ROOT}/CF'
 
-DECOMPRESSED_URL = f'{V8ROOT}/DF/'
-DECOMPRESSED_ROOT  = os.path.join(BASE_DIR, f'../{V8ROOT}/DF/')
+DECOMPRESSED_URL = f'/DF'
+DECOMPRESSED_ROOT  = f'{V8ROOT}/DF/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -131,6 +131,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = "/home/techpology/gitRepos/Crosser/backend/static/"
 STATIC_URL = 'static/'
 
 # Default primary key field type

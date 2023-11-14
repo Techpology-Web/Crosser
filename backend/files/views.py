@@ -9,11 +9,11 @@ import threading
 from backend.settings import V8ROOT
 
 
-compressed_size = "./compressed_size.txt"
-compressed_output =   f"../{V8ROOT}/CF"
-decompressed_output = f"../{V8ROOT}/DF"
-media =               f"../{V8ROOT}/COMP"
-db_folder =           f"../{V8ROOT}/DB/CDF"
+compressed_size = "/home/techpology/gitRepos/Crosser/backend/compressed_size.txt"
+compressed_output =   f"{V8ROOT}/CF"
+decompressed_output = f"{V8ROOT}/DF"
+media =               f"{V8ROOT}/COMP"
+db_folder =           f"{V8ROOT}/DB/CDF"
 
 def get_size(start_path = '.'):
     total_size = 0
