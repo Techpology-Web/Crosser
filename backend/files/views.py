@@ -78,7 +78,7 @@ def hexToBytes(filename):
             f.write(buffer)
         print("changed from hex to bytes succesfully")
     except Exception as e:
-        print(str(e))
+        print("---error----:",str(e))
     return path
 
 
@@ -136,7 +136,8 @@ def get_output_file(folder, filename, extention=True):
 def getUrl(path):
 
     x=path
-    path = os.path.join(*(x.split(os.path.sep)[6:]))
+    split = x.split(os.path.sep)
+    path = os.path.join(*(split[len(split)-2:]))
 
     return (path)
 
