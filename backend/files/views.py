@@ -104,7 +104,6 @@ def decompress(request):
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(path)})
         elif hash.password == argon(password):
             filename = file.name
-
             path = hexToBytes(filename)
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(path)})
 
@@ -137,14 +136,13 @@ def get_output_file(folder, filename, extention=True):
 
 def getUrl(path):
 
-    url = "https://cross.techpology.com"
+    url = ""
     #url = "http://localhost:8000"
-    return url+(path[1:])
 
-def mv_file(outputfolder, filename, extention=".gg"):
-    #time.sleep(1)
-    #os.system(f"mkdir ./{outputfolder}/")
-    os.system(f"mv {media}/{filename} {outputfolder}/{os.path.splitext(filename)[0]}{extention}")
+    x = path[1:]
+    path = os.path.join(*(x.split(os.path.sep)[3:]))
+
+    return url+(path)
 
 def compress(request):
     if request.method == "POST":
@@ -188,6 +186,7 @@ def compress(request):
         hash.compressed_value = hach(file_path)
         hash.save()
         # save compressed hash value aswell
+        print(file_path[1:])
 
         return JsonResponse({"code":"sucessfully uploaded file","compressed_file":getUrl(file_path)})
     else:

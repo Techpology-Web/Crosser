@@ -3,7 +3,7 @@ import AdminContainer from "../AdminContainer.js"
 import FileInput from "../Components/FileInput.js"
 import Input from "../Components/Input.js"
 import Button from "../Components/Button.js"
-import axios from "../axiost.js"
+import axios, { getBaseURL } from "../axiost.js"
 import PopUp from "../Components/PopUp"
 import {GrClose} from "react-icons/gr"
 import UploadLoading from "../Components/UploadLoading.js"
@@ -60,7 +60,7 @@ export default function Decompress(props){
       }
     })
       .then(r=>{
-        window.open(r.data.file)
+        window.open(getBaseURL()+"/"+ r.data.file)
         setLoading(false)
         setOn(false)
       })

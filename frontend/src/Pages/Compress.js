@@ -3,7 +3,7 @@ import AdminContainer from "../AdminContainer.js"
 import FileInput from "../Components/FileInput.js"
 import Loading from "../Components/Loading.js"
 import UploadLoading from "../Components/UploadLoading.js"
-import axios from "../axiost"
+import axios, { getBaseURL } from "../axiost"
 import { changeUrl } from "../global_func.js"
 import {getCookie} from "../CookieHandler.js"
 
@@ -33,7 +33,7 @@ export default function Compress(props){
     })
       .then(r=>{
         // download the compressed file
-        window.open(r.data.compressed_file)
+        window.open(getBaseURL()+"/"+ r.data.compressed_file)
         setLoading(false)
       })
       .catch(error=>{

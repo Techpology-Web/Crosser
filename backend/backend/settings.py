@@ -21,10 +21,10 @@ V8ROOT = "V8_2"
 MEDIA_ROOT = os.path.join(BASE_DIR, f'../{V8ROOT}/COMP/')
 MEDIA_URL = 'media/'
 
-OUTPUT_URL = f'{V8ROOT}/CF'
+OUTPUT_URL = f'/CF'
 OUTPUT_ROOT  = os.path.join(BASE_DIR, f'../{V8ROOT}/CF')
 
-DECOMPRESSED_URL = f'{V8ROOT}/DF/'
+DECOMPRESSED_URL = f'/DF/'
 DECOMPRESSED_ROOT  = os.path.join(BASE_DIR, f'../{V8ROOT}/DF/')
 
 # Quick-start development settings - unsuitable for production
