@@ -88,7 +88,7 @@ export default function AdminContainer(props){
                 <div className="h-full flex flex-row items-end" >
                   <div className="flex flex-row items-center gap-2" >
                     <HiUserCircle className="w-1/3 h-[50px] text-gray-500" />
-                    <h1 className="text-2xl text-[#727272]" >{name.toUpperCase()}</h1>
+                    <h1 className="text-xl text-[#727272]" >{name.toUpperCase()}</h1>
                   </div>
                 </div>
               </div>
