@@ -77,7 +77,7 @@ def hexToBytes(filename):
         with open(path,"wb") as f:
             f.write(buffer)
         print("changed from hex to bytes succesfully")
-    except:
+    except Exception as e:
         pass
     return path
 
@@ -99,7 +99,6 @@ def decompress(request):
         if user.can_unlock(hash):
 
             filename = file.name
-
             path = hexToBytes(filename)
             return JsonResponse({"code":"sucessfully uploaded file", "file":getUrl(path)})
         elif hash.password == argon(password):
@@ -140,7 +139,7 @@ def getUrl(path):
     #url = "http://localhost:8000"
 
     x = path[1:]
-    path = os.path.join(*(x.split(os.path.sep)[3:]))
+    path = os.path.join(*(x.split(os.path.sep)[6:]))
 
     return url+(path)
 

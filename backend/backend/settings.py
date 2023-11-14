@@ -25,7 +25,7 @@ OUTPUT_URL = f'/CF'
 OUTPUT_ROOT  = f'{V8ROOT}/CF'
 
 DECOMPRESSED_URL = f'/DF'
-DECOMPRESSED_ROOT  = f'{V8ROOT}/DF/'
+DECOMPRESSED_ROOT  = f'{V8ROOT}/DF'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
