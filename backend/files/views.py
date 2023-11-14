@@ -138,7 +138,7 @@ def getUrl(path):
     x=path
     path = os.path.join(*(x.split(os.path.sep)[6:]))
 
-    return url+(path)
+    return (path)
 
 def compress(request):
     if request.method == "POST":
