@@ -15,7 +15,7 @@ decompressed_output = f"{V8ROOT}/DF"
 media =               f"{V8ROOT}/COMP"
 db_folder =           f"{V8ROOT}/DB/CDF"
 
-def get_size(start_path = '.'):
+def get_size(start_path = db_folder):
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(start_path):
         for f in filenames:
