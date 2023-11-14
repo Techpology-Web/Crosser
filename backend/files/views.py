@@ -135,10 +135,7 @@ def get_output_file(folder, filename, extention=True):
 
 def getUrl(path):
 
-    url = ""
-    #url = "http://localhost:8000"
-
-    x = path[1:]
+    x=path
     path = os.path.join(*(x.split(os.path.sep)[6:]))
 
     return url+(path)
